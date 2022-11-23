@@ -44,34 +44,36 @@ import base64, io, urllib #for displaying plots in table
 
 #Reading in data
 #---------------
+"""
 # (For developing script, will just use subset of data. Uncomment if needed)
 #Load bbox for script testing, change crs
-test_bbox_path = r"C:\VUB\Internship\Tree Species project\Data\test_bbox.shp"
+test_bbox_path = PATH TO BBOX
 test_bbox = gpd.read_file(test_bbox_path)
-test_bbox = test_bbox.to_crs(2193)
-
+test_bbox = test_bbox.to_crs(2193) #to match other data
+"""
 
 # (All) Tree crown polygons
 # Change to relevant file path for tree crown polygons
-crown_path = r"C:\VUB\Internship\Tree Species project\Data\aerial2017_maskrcnn.gpkg"
+crown_path = PATH TO CROWNS
 all_crowns = gpd.read_file(crown_path)
 # (All) City Council tree records (replace path for tree point data)
 #           (will also need to replace names of columns required for final dataframe dependant on information available
 #            e.g. height, girth, age etc.)
-trees_path = r"C:\VUB\Internship\Tree Species project\Data\WCC_Trees\WCC_Trees.shp"
+trees_path = PATH TO TREE RECORDS
 all_trees = gpd.read_file(trees_path)
 
+
 # (Clipped) Tree crowns (for testing)
-crowns_df = all_crowns.clip(test_bbox)
+#crowns_df = all_crowns.clip(test_bbox)
 # (Clipped) City Council trees (for testing)
-trees_df = all_trees.clip(test_bbox)
+#trees_df = all_trees.clip(test_bbox)
 
 # When using all data:
-#crowns_df = all_crowns
-#trees_df = all_trees
+crowns_df = all_crowns
+trees_df = all_trees
 
 # Satellite imagery
-sat_img = rasterio.open(r"C:\VUB\Internship\Tree Species project\Data\aerial2017_jpg.tif")
+sat_img = rasterio.open(PATH TO IMAGERY)
 
 #CRS.from_string(sat_img.GetProjection())   #can use to check CRS of sat image before use
 
