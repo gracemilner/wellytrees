@@ -196,6 +196,39 @@ cert_df['cert_score'] = (cert_df.mul(weights).sum(axis=1)) / cert_df.count(axis=
 cert_df['cert_score'] = standardise(cert_df['cert_score'])
 
 
+# PLotting certainty score
+#-------------------------
+# Here is some extra code to generate a histogram to explore the certainty score assigned to the tree records
+# Can be useful to explore the data, for seeing how changes to weighting decisions impacts the score, 
+# and for help in choosing what certainty threshold to use moving forward.
+ax = cert_df.hist(column="cert_score", bins=20, grid = False, color='#86bf91', zorder=2, rwidth=0.9)
+ax = ax[0]
+for x in ax:
+
+    # Despine
+    x.spines['right'].set_visible(False)
+    x.spines['top'].set_visible(False)
+    x.spines['left'].set_visible(False)
+
+    # Switch off ticks
+    x.tick_params(axis="both", which="both", bottom="off", top="off", labelbottom="on", left="off", right="off", labelleft="on")
+
+    # Draw horizontal axis lines
+    vals = x.get_yticks()
+    for tick in vals:
+        x.axhline(y=tick, linestyle='dashed', alpha=0.4, color='#eeeeee', zorder=1)
+
+    # Remove title
+    x.set_title("")
+
+    # Set x-axis label
+    x.set_xlabel("Certainty Score", labelpad=20, weight='bold', size=12)
+
+    # Set y-axis label
+    x.set_ylabel("Number of tree records", labelpad=20, weight='bold', size=12)
+
+
+
 
 # Tidying and Sub-Setting
 #------------------------
@@ -360,13 +393,6 @@ html_df = final_df.to_html(escape=False)
 #html_file = open("top100.html", "w")
 #html_file.write(html_df)
 #html_file.close()
-
-
-    
-
-
-
-
 
 
 
